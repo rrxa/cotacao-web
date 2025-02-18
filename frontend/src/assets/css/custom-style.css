@@ -1,0 +1,55 @@
+/* Barra vermelha no topo */
+.header {
+    background: #ED1650;
+    height: 25px;
+    width: 100%;
+}
+
+/* Navbar */
+.navbar {
+    background: #0A2A66;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* Container de rastreamento */
+.rastreamento {
+    display: flex;
+    align-items: center;
+}
+
+.rastreamento input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.rastreamento button {
+    background: #FFA500;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.rastreamento button:hover {
+    background: #E69500;
+}
