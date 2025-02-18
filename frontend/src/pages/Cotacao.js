@@ -1,77 +1,79 @@
 import React, { useState } from "react";
-import "./Cotacao.css";
+import Sidebar from "../components/Sidebar";
+import Header from "../components/Header";
 
 const Cotacao = () => {
-  const [formData, setFormData] = useState({
-    origem: "",
-    destino: "",
+  const [form, setForm] = useState({
+    cepOrigem: "74705340",
+    cepDestino: "",
     altura: "",
     largura: "",
     comprimento: "",
     peso: "",
-    valorSeguro: "0",
+    valorNotaFiscal: "",
+    entregaDomicilio: false,
+    pagamentoOrigem: true,
+    pagamentoDestino: false
   });
 
-  const [resultado, setResultado] = useState(null);
-
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+    setForm({
+      ...form,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
-  const handleCalcular = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:8000/calcular/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      setResultado(data);
-    } catch (error) {
-      console.error("Erro na requisição:", error);
+  const calcularCotacao = () => {
+    if (form.pagamentoDestino && form.entregaDomicilio) {
+      alert("Pagamento no destino não é permitido para entrega a domicílio. O pagamento deve ser na origem.");
+      return;
     }
+    
+    console.log("Cotação enviada:", form);
+    // Aqui você pode enviar os dados para a API do backend
   };
 
   return (
-    <div className="cotacao-container">
-      <h2>Cotação de Frete</h2>
-      <div className="form-group">
-        <label>CEP de Origem:</label>
-        <input type="text" name="origem" value={formData.origem} onChange={handleChange} />
-      </div>
-      <div className="form-group">
-        <label>CEP de Destino:</label>
-        <input type="text" name="destino" value={formData.destino} onChange={handleChange} />
-      </div>
-      <div className="form-group">
-        <label>Altura (cm):</label>
-        <input type="number" name="altura" value={formData.altura} onChange={handleChange} />
-      </div>
-      <div className="form-group">
-        <label>Largura (cm):</label>
-        <input type="number" name="largura" value={formData.largura} onChange={handleChange} />
-      </div>
-      <div className="form-group">
-        <label>Comprimento (cm):</label>
-        <input type="number" name="comprimento" value={formData.comprimento} onChange={handleChange} />
-      </div>
-      <div className="form-group">
-        <label>Peso (kg):</label>
-        <input type="number" name="peso" value={formData.peso} onChange={handleChange} />
-      </div>
-      <div className="form-group">
-        <label>Valor da Nota Fiscal (R$):</label>
-        <input type="number" name="valorSeguro" value={formData.valorSeguro} onChange={handleChange} />
-      </div>
-      <button onClick={handleCalcular}>Calcular</button>
-      {resultado && (
-        <div className="resultado">
-          <h3>Resultado:</h3>
-          <p>Preço do Frete: R$ {resultado.preco}</p>
+    <div style={{ display: "flex" }}>
+      <Sidebar />
+      <div style={{ flexGrow: 1, padding: "20px", marginLeft: "250px" }}>
+        <Header />
+        <h1>Calculadora de Frete</h1>
+        <div>
+          <label>CEP de Origem:</label>
+          <input type="text" value={form.cepOrigem} disabled />
+
+          <label>CEP de Destino:</label>
+          <input type="text" name="cepDestino" value={form.cepDestino} onChange={handleChange} />
+
+          <label>Altura (cm):</label>
+          <input type="number" name="altura" value={form.altura} onChange={handleChange} />
+
+          <label>Largura (cm):</label>
+          <input type="number" name="largura" value={form.largura} onChange={handleChange} />
+
+          <label>Comprimento (cm):</label>
+          <input type="number" name="comprimento" value={form.comprimento} onChange={handleChange} />
+
+          <label>Peso (kg):</label>
+          <input type="number" name="peso" value={form.peso} onChange={handleChange} />
+
+          <label>Valor da Nota Fiscal (R$):</label>
+          <input type="number" name="valorNotaFiscal" value={form.valorNotaFiscal} onChange={handleChange} />
+
+          <label>Entrega a Domicílio:</label>
+          <input type="checkbox" name="entregaDomicilio" checked={form.entregaDomicilio} onChange={handleChange} />
+
+          <label>Pagamento na Origem:</label>
+          <input type="checkbox" name="pagamentoOrigem" checked={form.pagamentoOrigem} onChange={handleChange} />
+
+          <label>Pagamento no Destino:</label>
+          <input type="checkbox" name="pagamentoDestino" checked={form.pagamentoDestino} onChange={handleChange} />
+
+          <button onClick={calcularCotacao}>Calcular</button>
         </div>
-      )}
+      </div>
     </div>
   );
 };
