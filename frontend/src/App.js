@@ -1,23 +1,25 @@
 import React from "react";
-import Navbar from "./components/Navbar";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Cotacao from "./pages/Cotacao";
 import EMinuta from "./pages/EMinuta";
 import Rastreio from "./pages/Rastreio";
-import { Routes, Route } from "react-router-dom"; // ✅ Apenas Routes e Route
+import Servicos from "./pages/Servicos";
+import Header from "./components/Header";
 
-function App() {
+const App = () => {
   return (
     <>
-      <Navbar />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cotacao" element={<Cotacao />} />
         <Route path="/eminuta" element={<EMinuta />} />
         <Route path="/rastreio" element={<Rastreio />} />
+        <Route path="/servicos" element={<Servicos />} />
       </Routes>
     </>
   );
-}
+};
 
 export default App;

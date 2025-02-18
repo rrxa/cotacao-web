@@ -1,6 +1,6 @@
+
 import React, { useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
+import Header from "../components/Header"; // Certifique-se de que esse caminho está correto
 
 const Cotacao = () => {
   const [form, setForm] = useState({
@@ -36,8 +36,7 @@ const Cotacao = () => {
 
   return (
     <div style={{ display: "flex" }}>
-      <Sidebar />
-      <div style={{ flexGrow: 1, padding: "20px", marginLeft: "250px" }}>
+        <div style={{ flexGrow: 1, padding: "20px", marginLeft: "250px" }}>
         <Header />
         <h1>Calculadora de Frete</h1>
         <div>
