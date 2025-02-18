@@ -1,23 +1,22 @@
-import axios from "axios";
+const API_URL = "http://127.0.0.1:8000";
 
-const API_URL = "http://localhost:8000/api"; // Ajuste conforme o backend
+export const calcularCotacao = async (dados) => {
+    try {
+        const response = await fetch(`${API_URL}/calcular/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify(dados),
+        });
 
-export const enviarCotacao = async (dados) => {
-  try {
-    const resposta = await axios.post(`${API_URL}/cotacao/`, dados);
-    return resposta.data;
-  } catch (erro) {
-    console.error("Erro ao enviar cotação:", erro);
-    return null;
-  }
-};
+        if (!response.ok) {
+            throw new Error("Erro ao calcular cotação");
+        }
 
-export const buscarCidades = async () => {
-  try {
-    const resposta = await axios.get(`${API_URL}/cidades/`);
-    return resposta.data;
-  } catch (erro) {
-    console.error("Erro ao buscar cidades:", erro);
-    return [];
-  }
+        return await response.json();
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+        return { erro: "Falha ao conectar com o servidor" };
+    }
 };
