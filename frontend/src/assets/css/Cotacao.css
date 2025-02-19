@@ -1,0 +1,77 @@
+.cotacao-container {
+  max-width: 1000px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+.form-container {
+  display: flex;
+  justify-content: space-between;
+  background: #f4f4f4;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.coluna-esquerda,
+.coluna-direita {
+  width: 50%;
+}
+
+.checkbox-group {
+  margin-top: 10px;
+}
+
+.volumes-container {
+  margin-top: 20px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.volume-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.volume-box input {
+  width: 60px;
+  padding: 10px;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.limpar-button {
+  background: red;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.calcular-button {
+  background: blue;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.resultado-container {
+  background: #e0e0e0;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 15px;
+}
