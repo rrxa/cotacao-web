@@ -34,7 +34,7 @@ function Rastreio() {
                 value={docNumber}
                 onChange={(e) => setDocNumber(e.target.value)}
             />
-            <button onClick={gerarLinkRastreio}>>*</button>
+            <button onClick={gerarLinkRastreio}>Rastrear</button>
         </div>
     );
 }
