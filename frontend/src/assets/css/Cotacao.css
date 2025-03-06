@@ -1,77 +1,204 @@
+/* Container principal da página de cotação */
 .cotacao-container {
-  max-width: 1000px;
-  margin: auto;
-  font-family: Arial, sans-serif;
+  max-width: 1000px; /* Define a largura máxima da área de conteúdo */
+  margin: auto; /* Centraliza a página */
+  font-family: Arial, sans-serif; /* Define a fonte padrão */
 }
 
+/* Estilização do formulário principal */
 .form-container {
-  display: flex;
-  justify-content: space-between;
-  background: #f4f4f4;
-  padding: 15px;
-  border-radius: 15px;
+  display: flex; /* Organiza os elementos em linha */
+  justify-content: space-between; /* Distribui os elementos com espaço entre eles */
+  background: #f4f4f4; /* Define um fundo cinza claro */
+  padding: 15px; /* Adiciona espaçamento interno */
+  border-radius: 15px; /* Arredonda os cantos do formulário */
 }
 
-.coluna-esquerda,
+/* Configuração da coluna esquerda */
+.coluna-esquerda {
+  display: flex; /* Define a disposição em coluna */
+  flex-direction: column; /* Organiza os itens em coluna */
+}
+
+/* Estilização dos rótulos dentro da coluna esquerda */
+.coluna-esquerda label {
+  margin-top: 10px; /* Adiciona um espaçamento acima do rótulo */
+  font-weight: bold; /* Deixa o texto do rótulo em negrito */
+}
+
+/* Estilização dos campos de entrada dentro da coluna esquerda */
+.coluna-esquerda input {
+  width: 100%; /* Define a largura total do campo */
+  padding: 10px; /* Adiciona espaçamento interno */
+  margin-top: 5px; /* Adiciona espaçamento entre o rótulo e o campo */
+  border: 2px solid #ccc; /* Adiciona uma borda cinza */
+  border-radius: 50px; /* Arredonda as bordas do campo */
+}
+
+/* Define a largura da coluna direita */
 .coluna-direita {
-  width: 50%;
+  width: 50%; /* Define que a coluna direita ocupa metade do espaço */
 }
 
+/* Grupo de checkboxes (entrega e pagamento) */
 .checkbox-group {
-  margin-top: 10px;
+  background: #f9f9f9; /* Define um fundo cinza claro */
+  padding: 15px; /* Adiciona espaçamento interno */
+  border-radius: 10px; /* Arredonda os cantos */
+  margin-top: 10px; /* Adiciona espaçamento entre os grupos */
+  border: 1px solid #ddd; /* Adiciona uma borda cinza clara */
+  display: flex; /* Organiza os itens do grupo */
+  flex-direction: column; /* Organiza os itens verticalmente */
+  gap: 10px; /* Adiciona espaçamento entre os elementos */
 }
 
+/* Estilização dos títulos dentro dos grupos de checkboxes */
+.checkbox-group strong {
+  font-size: 16px; /* Define um tamanho de fonte maior */
+  color: #333; /* Define a cor do texto */
+}
+
+/* Estilização dos rótulos dos checkboxes */
+.checkbox-group label {
+  display: flex; /* Alinha o ícone da checkbox e o texto */
+  align-items: center; /* Centraliza verticalmente */
+  gap: 8px; /* Adiciona um espaço entre a caixa de seleção e o texto */
+  font-size: 14px; /* Define o tamanho da fonte */
+  color: #555; /* Define a cor do texto */
+  cursor: pointer; /* Torna o cursor interativo */
+}
+
+/* Ajusta o tamanho das caixas de seleção */
+.checkbox-group input {
+  transform: scale(1.2); /* Aumenta ligeiramente o tamanho da checkbox */
+  cursor: pointer; /* Torna a checkbox clicável */
+}
+
+/* Estilização do container de volumes */
 .volumes-container {
-  margin-top: 20px;
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 15px;
+  margin-top: 20px; /* Adiciona espaçamento acima */
+  background: #f9f9f9; /* Define um fundo cinza claro */
+  padding: 15px; /* Adiciona espaçamento interno */
+  border-radius: 15px; /* Arredonda os cantos */
 }
 
+/* Estilização dos campos de entrada de volume */
 .volume-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  display: flex; /* Organiza os campos em linha */
+  align-items: center; /* Centraliza os itens verticalmente */
+  gap: 20px; /* Adiciona espaçamento entre os itens */
+  margin-bottom: 10px; /* Adiciona espaçamento entre os campos de volume */
 }
 
+/* Ajusta a largura dos campos de entrada de volume */
 .volume-box input {
-  width: 60px;
-  padding: 10px;
+  width: 60px; /* Define uma largura fixa */
+  padding: 10px; /* Adiciona espaçamento interno */
+  border-radius: 8px; /* Arredonda os cantos */
 }
 
+/* Estilização do botão de remoção de volume */
 .delete-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
+  background: none; /* Remove fundo */
+  border: none; /* Remove borda */
+  cursor: pointer; /* Torna o botão clicável */
+  font-size: 15px; /* Define o tamanho do ícone */
 }
 
+/* Estilização dos botões */
 .button-group {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  display: flex; /* Organiza os botões em linha */
+  justify-content: space-between; /* Mantém espaço entre os botões */
+  margin-top: 20px; /* Adiciona espaçamento acima */
 }
 
+/* Estilização do botão de limpar */
 .limpar-button {
-  background: red;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
+  background: red; /* Define a cor de fundo vermelha */
+  color: white; /* Define a cor do texto branca */
+  padding: 10px; /* Adiciona espaçamento interno */
+  border: none; /* Remove borda */
+  cursor: pointer; /* Torna o botão clicável */
 }
 
+/* Estilização do botão de calcular */
 .calcular-button {
-  background: blue;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
+  background: blue; /* Define a cor de fundo azul */
+  color: white; /* Define a cor do texto branca */
+  padding: 10px; /* Adiciona espaçamento interno */
+  border: none; /* Remove borda */
+  cursor: pointer; /* Torna o botão clicável */
 }
 
+/* Estilização do container de resultado da cotação */
 .resultado-container {
-  background: #e0e0e0;
-  padding: 15px;
-  margin-top: 20px;
-  border-radius: 15px;
+  background: #e0e0e0; /* Define um fundo cinza médio */
+  padding: 15px; /* Adiciona espaçamento interno */
+  margin-top: 20px; /* Adiciona espaçamento acima */
+  border-radius: 15px; /* Arredonda os cantos */
+}
+/* Estilo para os botões de seleção */
+.option-button {
+  width: 100%; /* O botão ocupará toda a largura do contêiner pai */
+  padding: 10px; /* Adiciona espaçamento interno para melhor aparência */
+  text-align: center; /* Centraliza o texto dentro do botão */
+  border: 2px solid #ccc; /* Define uma borda cinza clara para o botão */
+  border-radius: 10px; /* Deixa as bordas arredondadas para um design moderno */
+  cursor: pointer; /* Muda o cursor para "pointer" ao passar o mouse, indicando que o botão é clicável */
+  transition: 0.3s; /* Adiciona uma transição suave para mudanças de estilo */
+  font-weight: bold; /* Deixa o texto do botão em negrito */
+  background: #f4f4f4; /* Define a cor de fundo padrão do botão como um cinza claro */
+  color: #333; /* Define a cor do texto como cinza escuro */
+}
+
+/* Estilo quando o botão está ativo (selecionado) */
+.option-button.active {
+  background: #007bff; /* Altera o fundo para azul quando o botão está selecionado */
+  color: white; /* Muda a cor do texto para branco para contraste */
+  border-color: #007bff; /* Muda a borda para azul, combinando com o fundo */
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+.option-button:hover {
+  opacity: 0.8; /* Reduz um pouco a opacidade para dar um efeito de "hover" */
+}
+/* Estilo para os botões de seleção de Pagamento */
+.payment-button {
+  width: 100%; /* O botão ocupa 100% da largura do contêiner */
+  padding: 10px; /* Adiciona um espaçamento interno para melhor aparência */
+  text-align: center; /* Centraliza o texto dentro do botão */
+  border: 2px solid #ccc; /* Define uma borda cinza clara */
+  border-radius: 10px; /* Adiciona cantos arredondados ao botão */
+  cursor: pointer; /* Transforma o cursor em uma mão ao passar por cima, indicando que é clicável */
+  transition: 0.3s; /* Cria um efeito de transição suave ao mudar de estado */
+  font-weight: bold; /* Define o texto como negrito para melhor legibilidade */
+  background: #f4f4f4; /* Define a cor de fundo padrão como cinza claro */
+  color: #333; /* Define a cor do texto como cinza escuro */
+}
+
+.payment-button.active {
+  background: #007bff; /* Quando ativo, a cor de fundo se torna azul */
+  color: white; /* O texto fica branco para contraste */
+  border-color: #007bff; /* A borda também fica azul para manter a consistência visual */
+}
+
+.payment-button:hover {
+  opacity: 0.8; /* Reduz ligeiramente a opacidade ao passar o mouse, criando um efeito visual */
+}
+/* Ajuste do contêiner de seguro para ocupar toda a largura */
+.checkbox-group.seguro {
+  display: flex; /* Mantém os botões na mesma linha */
+  flex-direction: column; /* Mantém o título separado dos botões */
+  justify-content: flex-start; /* Alinha os botões à esquerda */
+  align-items: flex-start; /* Garante que os itens fiquem bem alinhados */
+  gap: 10px; /* Adiciona um pequeno espaço entre os botões */
+  width: 100%; /* Faz o container ocupar toda a largura */
+}
+
+/* Ajuste do grupo de botões do seguro */
+.seguro-options {
+  display: flex; /* Organiza os botões em linha */
+  justify-content: space-between; /* Distribui os botões igualmente */
+  gap: 10px; /* Adiciona espaço entre os botões */
+  width: 100%; /* Garante que os botões ocupem toda a largura */
 }

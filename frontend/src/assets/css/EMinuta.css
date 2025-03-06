@@ -1,0 +1,69 @@
+.eminuta-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.eminuta-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+p {
+  font-size: 16px;
+  color: #555;
+}
+
+ol {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+ol li {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.strong {
+  font-weight: bold;
+  color: #333;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.eminuta-button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.eminuta-button {
+  background: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.eminuta-button:hover {
+  background: #0056b3;
+}

@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Parametro, Cidade
 
-# Register your models here.
+admin.site.register(Parametro)
+admin.site.register(Cidade)

@@ -1,45 +1,55 @@
-import json
-import unicodedata
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from .models import Parametro, Cidade, Cotacao
+from .serializers import ParametroSerializer, CidadeSerializer, CotacaoSerializer
 
-@csrf_exempt
+@api_view(['GET'])
+def listar_parametros(request):
+    """
+    Retorna uma lista de parâmetros cadastrados no banco de dados.
+    """
+    parametros = Parametro.objects.all()
+    serializer = ParametroSerializer(parametros, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def detalhes_cidade(request, iata):
+    """
+    Retorna os detalhes de uma cidade pelo código IATA.
+    """
+    cidade = get_object_or_404(Cidade, iata=iata.upper())
+    serializer = CidadeSerializer(cidade)
+    return Response(serializer.data)
+
+@api_view(['POST'])
 def calcular_cotacao(request):
-    if request.method == "POST":
-        try:
-            # 🔹 Decodifica corretamente o JSON garantindo UTF-8
-            raw_data = request.body.decode("utf-8", errors="replace")
-            data = json.loads(raw_data)
+    """
+    Calcula a cotação com base nos dados fornecidos.
+    Espera-se um JSON com 'origem', 'destino' e 'peso'.
+    """
+    origem_iata = request.data.get("origem")
+    destino_iata = request.data.get("destino")
+    peso = request.data.get("peso")
 
-            # 🔹 Normaliza caracteres acentuados corretamente
-            def normalize(text):
-                if isinstance(text, str):
-                    return unicodedata.normalize("NFKC", text)
-                return text
+    if not origem_iata or not destino_iata or not peso:
+        return Response({"erro": "Campos obrigatórios: origem, destino, peso"}, status=400)
 
-            origem = normalize(data.get("origem", "").strip())
-            destino = normalize(data.get("destino", "").strip())
-            peso = data.get("peso")
+    origem = get_object_or_404(Cidade, iata=origem_iata.upper())
+    destino = get_object_or_404(Cidade, iata=destino_iata.upper())
 
-            # 🔹 Verifica se os campos obrigatórios estão presentes
-            if not origem or not destino or not peso:
-                return JsonResponse({"erro": "Dados incompletos"}, status=400)
+    parametro = Parametro.objects.filter(destino=destino).first()
+    if not parametro:
+        return Response({"erro": "Não há parâmetros cadastrados para essa cidade."}, status=400)
 
-            # 🔹 Simula o cálculo do preço
-            resultado = {
-                "origem": origem,
-                "destino": destino,
-                "preco": float(peso) * 10  # Exemplo de cálculo
-            }
+    cotacao = Cotacao(
+        origem=origem,
+        destino=destino,
+        peso=peso,
+        tarifa=parametro.tarifa,
+        desconto=0  # Caso precise de lógica de desconto, adicionar aqui
+    )
+    cotacao.valor_final = cotacao.calcular_valor_final()
 
-            # 🔹 Retorna JSON garantindo UTF-8 e preservando caracteres especiais
-            return JsonResponse(resultado, json_dumps_params={'ensure_ascii': False})
-
-        except UnicodeDecodeError:
-            return JsonResponse({"erro": "Erro de codificação. Certifique-se de que os dados estão em UTF-8."}, status=400)
-        except json.JSONDecodeError:
-            return JsonResponse({"erro": "Erro ao processar JSON"}, status=400)
-        except Exception as e:
-            return JsonResponse({"erro": str(e)}, status=500)
-
-    return JsonResponse({"erro": "Método não permitido"}, status=405)
+    serializer = CotacaoSerializer(cotacao)
+    return Response(serializer.data)
