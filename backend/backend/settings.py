@@ -84,7 +84,9 @@ USE_TZ = True
 # Configuração de arquivos estáticos
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
+# 🔹 Verifica se o diretório existe antes de adicioná-lo
+import os
+STATICFILES_DIRS = [BASE_DIR / "static"] if os.path.exists(BASE_DIR / "static") else []
 
 # Definição do tipo de ID padrão
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
