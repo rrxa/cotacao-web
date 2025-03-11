@@ -58,14 +58,30 @@ class TarifaST(models.Model):
 
 # 📌 Modelo de Tarifas para E-Fácil e Veloz (Vinculado ao IATA)
 class TarifaRaio(models.Model):
-    iata = models.ForeignKey(Iata, on_delete=models.CASCADE, null=True, blank=True)
-    servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
-    raio = models.IntegerField()  # Número do raio (1, 2, 3, etc.)
-    peso = models.DecimalField(max_digits=5, decimal_places=2)  # Peso específico (1kg, 2kg, etc.)
-    valor = models.DecimalField(max_digits=10, decimal_places=2)  # Valor da tarifa para esse peso e raio
+    iata = models.ForeignKey("Iata", on_delete=models.CASCADE, null=True, blank=True)
+    servico = models.ForeignKey("Servico", on_delete=models.CASCADE)
+    raio = models.IntegerField()  # Número do raio (1, 2, 3, ..., 48)
+    peso = models.DecimalField(max_digits=5, decimal_places=2)  # Peso informado pelo usuário
+    valor_base = models.DecimalField(max_digits=10, decimal_places=2)  # Valor usado para peso até 30kg
+    valor_fixo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # 🔹 Novo campo para cálculo acima de 30kg
+    valor_calculado = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+    def calcular_valor(self):
+        """
+        🔹 Lógica baseada na planilha:
+        - Se o peso for até 30kg, usa `valor_base`
+        - Se o peso for maior que 30kg, usa `valor_fixo` * peso
+        """
+        if self.peso > 30 and self.valor_fixo is not None:
+            return self.valor_fixo * self.peso
+        return self.valor_base if self.peso <= 30 else Decimal(0)
+
+    def save(self, *args, **kwargs):
+        self.valor_calculado = self.calcular_valor()  # Sempre calcula antes de salvar
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.iata} - Raio {self.raio} - {self.peso}kg - R${self.valor}"
+        return f"{self.iata} - Raio {self.raio} - {self.peso}kg - R${self.valor_calculado}"
 
 # 📌 Modelo de Parâmetro para armazenar regras de cotação
 class Parametro(models.Model):
