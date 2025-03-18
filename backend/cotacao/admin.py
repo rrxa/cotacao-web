@@ -13,13 +13,12 @@ class CidadeAdmin(admin.ModelAdmin):
     list_display = ["nome", "uf", "iata"]
     search_fields = ["nome", "uf", "iata__codigo"]  # 🔥 Busca cidades pelo nome, UF e código IATA
 
-# 🔹 Registro de TarifaStandard com filtros e autocomplete
 @admin.register(TarifaStandard)
 class TarifaStandardAdmin(admin.ModelAdmin):
-    list_display = ("cidade", "origem", "servico", "tarifa_ate_5kg", "tarifa_por_kg_adicional", "prazo")
-    list_filter = ("servico", "cidade", "origem")
-    search_fields = ["cidade__nome", "origem__nome", "servico__nome"]  # 🔥 Busca pelo nome da cidade e serviço
-    autocomplete_fields = ["cidade", "origem"]  # 🔥 Habilita autocomplete nos campos cidade e origem
+    list_display = ('iata', 'servico', 'tarifa_ate_5kg', 'tarifa_por_kg_adicional', 'prazo')  # 🔹 Alterado de 'cidade' para 'iata'
+    list_filter = ('iata', 'servico')  # 🔹 Alterado para 'iata'
+    search_fields = ['iata__codigo', 'servico__nome']  # 🔹 Busca agora pelo código IATA
+    
 
 # 🔹 Registro de TarifaRaio com campos corrigidos e readonly para o valor calculado
 @admin.register(TarifaRaio)

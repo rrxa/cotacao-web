@@ -5,6 +5,7 @@ const Cotacao = () => {
   const [form, setForm] = useState({
     cepOrigem: "74672856",
     cepDestino: "",
+    destino: "", //campo para armazenar a cidade encontrada
     valorNotaFiscal: "R$ 0,00",
     entregaDomicilio: false,
     retiraTerminal: false,
@@ -34,18 +35,54 @@ const Cotacao = () => {
         })
       : "";
   };
+  // 🔍 **Buscar cidade pelo CEP automaticamente**
+  const buscarEnderecoPorCEP = async (cep) => {
+    try {
+      const response = await fetch(
+        `https://viacep.com.br/ws/${cep.replace("-", "")}/json/`
+      );
+      const data = await response.json();
+
+      if (!data.erro) {
+        setForm((prevForm) => ({
+          ...prevForm,
+          destino: `${data.localidade}-${data.uf}`, // Exemplo: "São Paulo-SP"
+        }));
+      } else {
+        alert("CEP não encontrado. Verifique e tente novamente.");
+      }
+    } catch (error) {
+      console.error("Erro ao buscar CEP:", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     let newValue = value;
-    if (name === "cepDestino") newValue = formatCEP(value);
-    if (name === "valorNotaFiscal") newValue = formatCurrency(value);
 
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: newValue,
-    }));
+    if (name === "cepDestino") {
+      newValue = formatCEP(value); // Formata o CEP corretamente
+      setForm((prevForm) => ({
+        ...prevForm,
+        [name]: newValue,
+      }));
+
+      if (newValue.length === 9) {
+        // 🔍 Se o CEP estiver completo, busca a cidade automaticamente
+        buscarEnderecoPorCEP(newValue);
+      }
+    } else if (name === "valorNotaFiscal") {
+      newValue = formatCurrency(value);
+      setForm((prevForm) => ({
+        ...prevForm,
+        [name]: newValue,
+      }));
+    } else {
+      setForm((prevForm) => ({
+        ...prevForm,
+        [name]: newValue,
+      }));
+    }
   };
 
   // Alternar entre Entrega a Domicílio e Retira no Terminal
@@ -190,8 +227,42 @@ const Cotacao = () => {
   };
 
   // Simulação de cotação
-  const calcularCotacao = () => {
-    console.log("Cotação enviada:", form);
+  const calcularCotacao = async () => {
+    let valorNF =
+      parseFloat(
+        form.valorNotaFiscal.replace("R$", "").replace(",", ".").trim()
+      ) || 0;
+    let seguroAdValorem = form.adValorem ? valorNF * 0.007 : 0; // 0.7% do valor da NF
+
+    const dadosCotacao = {
+      origem: "GYN", // Sempre Goiânia
+      destino: form.destino, // Cidade buscada pelo CEP
+      peso: form.volumes.reduce(
+        (total, vol) => total + parseFloat(vol.peso || 0),
+        0
+      ),
+      seguro: seguroAdValorem.toFixed(2), // Inclui o seguro no formato correto
+    };
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/calcular-cotacao/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dadosCotacao),
+        }
+      );
+
+      if (!response.ok) throw new Error("Erro ao calcular cotação");
+
+      const resultado = await response.json();
+      console.log("Resultado da Cotação:", resultado);
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    }
   };
 
   return (
@@ -211,6 +282,8 @@ const Cotacao = () => {
             onChange={handleChange}
             placeholder="Digite o CEP"
           />
+          <label>Destino:</label>
+          <input type="text" name="destino" value={form.destino} disabled />
 
           <label>Valor total dos Produtos:</label>
           <input

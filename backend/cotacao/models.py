@@ -39,15 +39,16 @@ class Servico(models.Model):
 
 # 📌 Modelo de Tarifas para Standard (Vinculado a Cidade)
 class TarifaStandard(models.Model):
-    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE, related_name="tarifas_standard")
-    origem = models.ForeignKey(Cidade, related_name="origem_tarifa", on_delete=models.CASCADE, null=True, blank=True)
+    iata = models.ForeignKey(Iata, on_delete=models.CASCADE, related_name="tarifas_standard")  # ✅ Mudando de cidade para iata
     servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
     tarifa_ate_5kg = models.DecimalField(max_digits=10, decimal_places=2)
     tarifa_por_kg_adicional = models.DecimalField(max_digits=10, decimal_places=2)
     prazo = models.IntegerField()
 
     def __str__(self):
-        return f"{self.origem} -> {self.cidade} ({self.servico})"
+        return f"{self.iata} ({self.servico})"
+
+
 class TarifaST(models.Model):
     codigo = models.CharField(max_length=10, unique=True)
     tarifa_ate_5kg = models.DecimalField(max_digits=10, decimal_places=2)

@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Diretório base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,11 +82,13 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-# Configuração de arquivos estáticos
+# 📌 Configuração de arquivos estáticos (Correção do erro `collectstatic`)
 STATIC_URL = '/static/'
 
-# 🔹 Verifica se o diretório existe antes de adicioná-lo
-import os
+# 🔹 Diretório onde os arquivos estáticos serão coletados (necessário para produção)
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# 🔹 Diretórios adicionais para arquivos estáticos (para uso no desenvolvimento)
 STATICFILES_DIRS = [BASE_DIR / "static"] if os.path.exists(BASE_DIR / "static") else []
 
 # Definição do tipo de ID padrão
