@@ -1,0 +1,16 @@
+[33m85e9344a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Corrigindo caminho do backend.settings
+[33m55de826c[m Removendo ArquivosExternos do repositório
+[33m55f9d57d[m Atualização do backend para deploy no Render
+[33m01c87d80[m Atualização tarifaraio
+[33mdcfb0fd4[m Atualização do banco de dados - inserção de st_codigo e prazos
+[33m0e77b2f6[m Atualização das cidades com ST, prazo base e prazo adicional
+[33ma6605c3a[m Salvar progresso - Cidades e Tarifas importadas com sucesso
+[33m2598955e[m Atualização do backend e correção do banco de dados
+[33m8dbe4d18[m Atualização do backend: ajustes em modelos, remoção de duplicatas, e configurações do Django Admin
+[33m3884f7e5[m Pastras duplicadas
+[33m751e10a4[m Correções visuais na página de Cotação e ajustes no layout
+[33m486a703d[m Correção do roteamento e ajustes na estrutura do Header
+[33m8c700a01[m Adicionado Sidebar, Header e ajustes na página de cotação
+[33m2d9b590d[m Correções e ajustes no frontend e backend
+[33m9c4d7493[m Corrigindo estrutura do frontend no repositório principal
+[33m3ca27fea[m Atualizando o projeto cotacao-web
